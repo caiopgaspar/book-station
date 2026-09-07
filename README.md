@@ -1,19 +1,19 @@
-# 📚 Book Manager — Desafio Técnico Full-Stack
+# 📚 Book Station
 
 [![Java](https://img.shields.io/badge/Java-17-blue.svg)](https://adoptium.net/)
-[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.0.6-brightgreen.svg)](https://spring.io/projects/spring-boot)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5.4-brightgreen.svg)](https://spring.io/projects/spring-boot)
 [![Angular](https://img.shields.io/badge/Angular-22-red.svg)](https://angular.dev/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-17-blue.svg)](https://www.postgresql.org/)
 [![Docker](https://img.shields.io/badge/Docker-✓-2496ED.svg)](https://www.docker.com/)
 
-Aplicação full-stack para gerenciamento de livros com autenticação JWT e CRUD completo. Desenvolvida como desafio técnico.
+Aplicação full-stack para gerenciamento de bibliotecas e livrarias com autenticação JWT e CRUD completo.
 
 
 ---
 
 ## 🎯 Sobre o Projeto
 
-**Book Manager** é uma aplicação full-stack que permite aos usuários gerenciar uma biblioteca pessoal de livros. O sistema conta com autenticação JWT e um CRUD completo, com interface intuitiva que permite o acesso às funcionalidades da aplicação.
+**Book Station** é uma aplicação completa que permite aos usuários gerenciar uma biblioteca ou uma livraria. O sistema conta com autenticação JWT e um CRUD completo, com interface intuitiva que permite o acesso às funcionalidades da aplicação.
 
 ### Objetivo
 - ✅ Criar conta e fazer login com autenticação JWT (páginas internas protegidas)
@@ -180,7 +180,4 @@ A estrutura escolhida fornece uma clara separação de responsabilidades e garan
 
 
 ---
-### 🤝 Contribuição
-
-Este é um projeto de desafio técnico. Contribuições não são esperadas, mas feedbacks são bem-vindos!
 
