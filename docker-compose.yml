@@ -1,32 +1,30 @@
-version: '3.8'
-
 services:
 
   postgres:
     image: postgres:17
-    container_name: postgres_bookmanager
+    container_name: postgres_bookstation
     environment:
-      POSTGRES_DB: bookmanager_db
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
-      - book-manager-network
+      - book-station-network
 
   backend:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    container_name: book-manager-app
+    container_name: book-station-app
     ports:
       - "8080:8080"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/bookmanager_db
-      SPRING_DATASOURCE_USERNAME: admin
-      SPRING_DATASOURCE_PASSWORD: 1234
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
       SPRING_JPA_HIBERNATE_DDL_AUTO: validate
       SPRING_FLYWAY_ENABLED: "true"
       SPRING_FLYWAY_BASELINE_ON_MIGRATE: "true"
@@ -35,23 +33,23 @@ services:
     depends_on:
       - postgres
     networks:
-      - book-manager-network
+      - book-station-network
 
   frontend:
     build:
       context: ./frontend/frontend-app
       dockerfile: Dockerfile
-    container_name: book-manager-frontend
+    container_name: book-station-frontend
     ports:
       - "4200:80"
     depends_on:
       - backend
     networks:
-      - book-manager-network
+      - book-station-network
 
 volumes:
   postgres_data:
 
 networks:
-  book-manager-network:
+  book-station-network:
     driver: bridge
