@@ -36,12 +36,13 @@ export class BookListComponent implements OnInit {
     this.loading = true;
     this.cdr.detectChanges();
 
-    this.bookService.getBooks(this.currentPage, this.pageSize).subscribe({
+    this.bookService.getBooks(this.currentPage, this.size).subscribe({
       next: (data: PageResponse<Book>) => {
         console.log('Data:', data);
         this.books = data.content;
-        this.currentPage = data.pageNumber;
+        this.currentPage = data.number;
         this.totalPages = data.totalPages;
+        this.pageSize = data.size;
         this.totalElements = data.totalElements;
         this.loading = false;
         this.cdr.detectChanges();
@@ -67,8 +68,9 @@ export class BookListComponent implements OnInit {
     this.bookService.searchBooks(title, this.currentPage, this.pageSize).subscribe({
       next: (data: PageResponse<Book>) => {
         this.books = data.content;
-        this.currentPage = data.pageNumber;
+        this.currentPage = data.number;
         this.totalPages = data.totalPages;
+        this.pageSize = data.size;
         this.totalElements = data.totalElements;
         this.loading = false;
         this.cdr.detectChanges();
