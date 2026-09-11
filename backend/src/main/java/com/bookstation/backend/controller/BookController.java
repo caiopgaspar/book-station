@@ -2,10 +2,11 @@ package com.bookstation.backend.controller;
 
 import com.bookstation.backend.dto.request.BookRequest;
 import com.bookstation.backend.dto.response.BookResponse;
-import com.bookstation.backend.dto.response.PageResponse;
 import com.bookstation.backend.service.BookService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,15 +20,13 @@ public class BookController {
     private static final int DEFAULT_PAGE_SIZE = 12;
 
     @GetMapping
-    public ResponseEntity<PageResponse<BookResponse>> getAllBooks(
-            @RequestParam(required = false) String title,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "12") int size) {
+    public ResponseEntity<Page<BookResponse>> getAllBooks(
+            @RequestParam(required = false) String title, Pageable pageable) {
 
         if (title != null && !title.isEmpty()) {
-            return ResponseEntity.ok(bookService.searchBookByTitle(title, page, size));
+            return ResponseEntity.ok(bookService.searchBookByTitle(title, pageable));
         }
-        return ResponseEntity.ok(bookService.getAllBooks(page, size));
+        return ResponseEntity.ok(bookService.getAllBooks(pageable));
     }
 
     @GetMapping("/{id}")

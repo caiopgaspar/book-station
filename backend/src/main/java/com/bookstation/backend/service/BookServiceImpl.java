@@ -20,31 +20,15 @@ public class BookServiceImpl implements BookService{
     private static final int DEFAULT_PAGE_SIZE = 12;
 
     @Override
-    public PageResponse<BookResponse> getAllBooks(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("id").ascending());
-        Page<Book> bookPage = bookRepository.findAll(pageable);
-
-        return new PageResponse<>(
-            bookPage.getContent().stream().map(this::toResponse).toList(),
-            bookPage.getNumber(),
-            bookPage.getSize(),
-            bookPage.getTotalElements(),
-            bookPage.getTotalPages()
-        );
+    public Page<BookResponse> getAllBooks(Pageable pageable) {
+        return bookRepository.findAll(pageable)
+                .map(this::toResponse);
     }
 
     @Override
-    public PageResponse<BookResponse> searchBookByTitle(String title, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("id").ascending());
-        Page<Book> bookPage = bookRepository.findByTitleContainingIgnoreCase(title, pageable);
-
-        return new PageResponse<>(
-            bookPage.getContent().stream().map(this::toResponse).toList(),
-            bookPage.getNumber(),
-            bookPage.getSize(),
-            bookPage.getTotalElements(),
-            bookPage.getTotalPages()
-        );
+    public Page<BookResponse> searchBookByTitle(String title, Pageable pageable) {
+        return bookRepository.findByTitleContainingIgnoreCase(title, pageable)
+                .map(this::toResponse);
     }
 
     @Override
