@@ -36,7 +36,7 @@ export class BookListComponent implements OnInit {
     this.loading = true;
     this.cdr.detectChanges();
 
-    this.bookService.getBooks(this.currentPage, this.size).subscribe({
+    this.bookService.getBooks(this.currentPage, this.pageSize).subscribe({
       next: (data: PageResponse<Book>) => {
         console.log('Data:', data);
         this.books = data.content;
