@@ -3,12 +3,12 @@ export const API = {
 
   AUTH: {
     LOGIN: '/auth/login',
-    REGISTER: '/auth/register'
+    REGISTER: '/auth'
   },
 
   BOOKS: {
     BASE: '/books',
-    CREATE: '/books/create',
+    CREATE: '/books',
     BY_ID: (id: number) => `/books/${id}`
   }
 };
