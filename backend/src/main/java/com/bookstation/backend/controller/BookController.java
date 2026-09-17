@@ -34,7 +34,7 @@ public class BookController {
         return ResponseEntity.ok(bookService.getBookById(id));
     }
 
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity<BookResponse> createBook(@Valid @RequestBody BookRequest request) {
         BookResponse response = bookService.createBook((request));
 
