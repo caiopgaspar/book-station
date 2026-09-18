@@ -5,7 +5,7 @@ import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router'
 
 export interface LoginRequest {
-  email: string;
+  username: string;
   password: string;
 }
 

@@ -14,7 +14,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class LoginComponent {
   credentials = {
-    email: '',
+    username: '',
     password: ''
   };
   loading = false;
@@ -28,7 +28,7 @@ export class LoginComponent {
 
   onSubmit(): void {
     console.log('Credencials:', this.credentials);
-    if (!this.credentials.email || !this.credentials.password) {
+    if (!this.credentials.username || !this.credentials.password) {
       this.toastr.error('Please fill in all the fields.');
       return;
     }
