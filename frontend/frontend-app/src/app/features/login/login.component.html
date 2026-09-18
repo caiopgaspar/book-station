@@ -5,14 +5,14 @@
 
     <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
       <div class="form-group">
-        <label for="email">Email</label>
+        <label for="username">Username</label>
         <input
-          type="email"
-          id="email"
-          name="email"
-          [(ngModel)]="credentials.email"
+          type="username"
+          id="username"
+          name="username"
+          [(ngModel)]="credentials.username"
           required
-          placeholder="Enter your email"
+          placeholder="Enter your username"
           [disabled]="loading"
         />
       </div>
