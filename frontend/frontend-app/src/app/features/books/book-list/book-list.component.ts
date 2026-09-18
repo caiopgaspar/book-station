@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { BookService, Book, PageResponse } from '../../../core/services/book.service';
 import { ToastrService } from 'ngx-toastr';
+import { AuthService } from '../../../core/auth/auth.service';
 
 @Component({
   selector: 'app-book-list',
@@ -24,7 +25,8 @@ export class BookListComponent implements OnInit {
   constructor(
     private bookService: BookService,
     private cdr: ChangeDetectorRef,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -40,8 +42,9 @@ export class BookListComponent implements OnInit {
       next: (data: PageResponse<Book>) => {
         console.log('Data:', data);
         this.books = data.content;
-        this.currentPage = data.pageNumber;
+        this.currentPage = data.number;
         this.totalPages = data.totalPages;
+        this.pageSize = data.size;
         this.totalElements = data.totalElements;
         this.loading = false;
         this.cdr.detectChanges();
@@ -67,8 +70,9 @@ export class BookListComponent implements OnInit {
     this.bookService.searchBooks(title, this.currentPage, this.pageSize).subscribe({
       next: (data: PageResponse<Book>) => {
         this.books = data.content;
-        this.currentPage = data.pageNumber;
+        this.currentPage = data.number;
         this.totalPages = data.totalPages;
+        this.pageSize = data.size;
         this.totalElements = data.totalElements;
         this.loading = false;
         this.cdr.detectChanges();
@@ -143,6 +147,10 @@ export class BookListComponent implements OnInit {
 
   getEndIndex(): number {
     return Math.min((this.currentPage + 1) * this.pageSize, this.totalElements);
+  }
+
+  logout(): void {
+    this.authService.logout()
   }
 
 }
