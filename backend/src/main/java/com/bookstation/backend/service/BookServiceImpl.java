@@ -12,6 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.Year;
+
 @Service
 @RequiredArgsConstructor
 public class BookServiceImpl implements BookService{
@@ -41,6 +43,8 @@ public class BookServiceImpl implements BookService{
     @Override
     public BookResponse createBook(BookRequest request){
 
+        validateYear(request.getYear());
+
         Book book = Book.builder()
                 .title(request.getTitle())
                 .author(request.getAuthor())
@@ -51,8 +55,6 @@ public class BookServiceImpl implements BookService{
         Book savedBook = bookRepository.save(book);
 
         return toResponse(savedBook);
-
-
     }
 
     @Override
@@ -86,5 +88,18 @@ public class BookServiceImpl implements BookService{
                 book.getYear(),
                 book.getDescription()
         );
+    }
+
+    private void validateYear(Integer year) {
+
+        int currentYear = Year.now().getValue();
+
+        if (year < 1000) {
+            throw new IllegalArgumentException("Year must be greater than or equal to 1000");
+        }
+
+        if (year > (currentYear + 1)) {
+            throw new IllegalArgumentException("Year cannot be greater then next year: " + (currentYear + 1));
+        }
     }
 }
