@@ -2,18 +2,16 @@ package com.bookstation.backend.service;
 
 import com.bookstation.backend.dto.request.BookRequest;
 import com.bookstation.backend.dto.response.BookResponse;
-import com.bookstation.backend.dto.response.PageResponse;
 import com.bookstation.backend.domain.Book;
 import com.bookstation.backend.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
 import java.time.Year;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class BookServiceImpl implements BookService{
@@ -43,18 +41,31 @@ public class BookServiceImpl implements BookService{
     @Override
     public BookResponse createBook(BookRequest request){
 
-        validateYear(request.getYear());
+        log.debug("Book request details: {}", request);
 
-        Book book = Book.builder()
-                .title(request.getTitle())
-                .author(request.getAuthor())
-                .year(request.getYear())
-                .description(request.getDescription())
-                .build();
+        try {
+            validateYear(request.getYear());
+            log.debug("Year validation passed: {}", request.getYear());
 
-        Book savedBook = bookRepository.save(book);
+            Book book = Book.builder()
+                    .title(request.getTitle())
+                    .author(request.getAuthor())
+                    .year(request.getYear())
+                    .description(request.getDescription())
+                    .build();
 
-        return toResponse(savedBook);
+            Book savedBook = bookRepository.save(book);
+            log.info("Book created successfully with ID: {}", savedBook.getId());
+
+            return toResponse(savedBook);
+
+        } catch (IllegalArgumentException ex) {
+            log.warn("Invalid year provided: {} - {}", request.getYear(), ex.getMessage());
+            throw ex;
+        } catch (Exception ex) {
+            log.error("Error creating book: {}", ex.getMessage(), ex);
+            throw ex;
+        }
     }
 
     @Override
@@ -74,9 +85,11 @@ public class BookServiceImpl implements BookService{
 
     @Override
     public void deleteBook(Long id){
+        log.info("Deleting book with ID: {}", id);
         bookRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Book not found"));
         bookRepository.deleteById(id);
+        log.info("Book deleted successfully with ID: {}", id);
     }
 
 
