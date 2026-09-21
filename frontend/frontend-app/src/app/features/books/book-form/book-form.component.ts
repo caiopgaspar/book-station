@@ -48,8 +48,7 @@ export class BookFormComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error loading book:', error);
-        this.toastr.error('Error loading book');
-        this.loading = false;
+        this.handleError(error, 'Error loading book');
       }
     });
   }
@@ -69,9 +68,7 @@ export class BookFormComponent implements OnInit {
           this.router.navigate(['/books']);
         },
         error: (error) => {
-          console.error('Error updating book:', error);
-          this.toastr.error('Error updating book');
-          this.loading = false;
+          this.handleError(error, 'Error updating book');
         }
       });
     } else {
@@ -81,9 +78,7 @@ export class BookFormComponent implements OnInit {
           this.router.navigate(['/books']);
         },
         error: (error) => {
-          console.error('Error creating book:', error);
-          this.toastr.error('Error creating book');
-          this.loading = false;
+          this.handleError(error, 'Error creating book');
         }
       });
     }
@@ -91,5 +86,24 @@ export class BookFormComponent implements OnInit {
 
   onCancel(): void {
     this.router.navigate(['/books']);
+  }
+
+  private handleError(error: any, fallbackMessage: string): void {
+    console.error('Error:', error);
+    this.loading = false;
+
+    if (error.error?.errors && typeof error.error.errors === 'object') {
+      Object.values(error.error.errors).forEach((message: any) => {
+        this.toastr.error(message);
+      });
+      return;
+    }
+
+    if (error.error?.message) {
+      this.toastr.error(error.error.message);
+      return;
+    }
+
+    this.toastr.error(fallbackMessage);
   }
 }
