@@ -132,6 +132,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1.5rem;
+  align-items: stretch;
 }
 
 .book-card {
@@ -140,6 +141,9 @@
   border-radius: 8px;
   padding: 1.5rem;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .book-card h3 {
@@ -162,10 +166,18 @@
   color: #555;
   font-size: 0.9rem;
   margin: 0.5rem 0;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-height: calc(1.4em * 3);
+  cursor: help;
 }
 
 .actions {
-  margin-top: 1rem;
+  margin-top: auto;
   padding-top: 1rem;
   border-top: 1px solid #eee;
   display: flex;
