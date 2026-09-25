@@ -30,7 +30,7 @@
       <h3>{{ book.title }}</h3>
       <p class="author">By: {{ book.author }}</p>
       <p *ngIf="book.year" class="year">Year: {{ book.year }}</p>
-      <p *ngIf="book.description" class="description">{{ book.description }}</p>
+      <p class="description" [title]="book.description || ''">{{ book.description }}</p>
       <div class="actions">
         <a [routerLink]="['/books', book.id, 'edit']" class="btn-edit">Edit</a>
         <button (click)="deleteBook(book)" class="btn-delete">Delete</button>

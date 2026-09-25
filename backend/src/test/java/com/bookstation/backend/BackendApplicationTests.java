@@ -1,4 +1,4 @@
-package com.bookmanager.backend;
+package com.bookstation.backend;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
